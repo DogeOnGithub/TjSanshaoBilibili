@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: tjsanshao-bilibili
+
+server:
+  port: 10080
