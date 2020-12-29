@@ -2,6 +2,7 @@ package top.tjsanshao.bilibili.current;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
+import top.tjsanshao.bilibili.data.TaskStatus;
 import top.tjsanshao.bilibili.data.UserInfo;
 
 /**
@@ -14,4 +15,5 @@ import top.tjsanshao.bilibili.data.UserInfo;
 @Component
 public class CurrentUser {
     private UserInfo userInfo;
+    private TaskStatus taskStatus;
 }
