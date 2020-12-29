@@ -12,4 +12,7 @@ public class BilibiliResponseConstant {
     public final static String DATA = "data";
     public final static String MONEY = "money";
     public final static String IS_LOGIN = "isLogin";
+    public final static String CARDS = "cards";
+    public final static String DESC = "desc";
+    public final static String BVID = "bvid";
 }
