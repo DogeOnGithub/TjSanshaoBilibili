@@ -19,6 +19,13 @@ public class OftenAPI {
 
     private final static String MONEY = "money";
 
+    /**
+     * 获取硬币余额
+     * url：https://account.bilibili.com/site/getCoin
+     * 响应格式为：
+     * {"code":0,"status":true,"data":{"money":4}}
+     * @return 硬币余额
+     */
     public double getCoinBalance() {
         JsonObject response = client.get(APIList.COIN_BALANCE);
         int code = response.get("code").getAsInt();

@@ -13,12 +13,21 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class PassCheck {
+    /**
+     * DedeUserID
+     */
     @Value("${bilibili.pass.userId}")
     private String userId;
 
+    /**
+     * SESSDATA
+     */
     @Value("${bilibili.pass.sessData}")
     private String sessData;
 
+    /**
+     * bili_jct
+     */
     @Value("${bilibili.pass.biliJct}")
     private String biliJct;
 
