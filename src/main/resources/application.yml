@@ -4,3 +4,10 @@ spring:
 
 server:
   port: 10080
+
+http:
+  client:
+    config:
+      connectTimeout: 5000
+      connectionRequestTimeout: 5000
+      socketTimeout: 10000
