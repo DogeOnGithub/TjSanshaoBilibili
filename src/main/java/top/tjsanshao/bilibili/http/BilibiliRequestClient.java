@@ -16,6 +16,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Component;
 import top.tjsanshao.bilibili.configuration.HttpConfiguration;
+import top.tjsanshao.bilibili.login.PassCheck;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -33,6 +34,8 @@ import java.util.Objects;
 public class BilibiliRequestClient {
     @Resource(name = "HttpConfiguration")
     private HttpConfiguration configuration;
+    @Resource
+    private PassCheck passCheck;
 
     @Setter
     @Getter
@@ -63,7 +66,7 @@ public class BilibiliRequestClient {
         httpPost.setHeader("Referer", "https://www.bilibili.com/");
         httpPost.setHeader("Connection", "keep-alive");
         httpPost.setHeader("User-Agent", userAgent);
-        httpPost.setHeader("Cookie", null);
+        httpPost.setHeader("Cookie", passCheck.getPass());
         StringEntity stringEntity = new StringEntity(body, "utf-8");
         httpPost.setEntity(stringEntity);
         try {
@@ -93,7 +96,7 @@ public class BilibiliRequestClient {
         httpGet.setHeader("Referer", "https://www.bilibili.com/");
         httpGet.setHeader("Connection", "keep-alive");
         httpGet.setHeader("User-Agent", userAgent);
-        httpGet.setHeader("Cookie", null);
+        httpGet.setHeader("Cookie", passCheck.getPass());
         httpGet.setConfig(config);
         try {
             response = client.execute(httpGet);

@@ -11,3 +11,9 @@ http:
       connectTimeout: 5000
       connectionRequestTimeout: 5000
       socketTimeout: 10000
+
+bilibili:
+  pass:
+    userId: 18811177
+    sessData: a53b464e%2C1614400499%2C13f32*81
+    biliJct: f006f6d11934d10ae49ade10717cf2db
