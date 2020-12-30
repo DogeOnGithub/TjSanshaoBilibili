@@ -47,6 +47,25 @@ public class OftenAPI {
     }
 
     /**
+     * 根据bvid获取视频标题
+     * @param bvid id
+     * @return 标题
+     */
+    public String videoTitle(String bvid) {
+        String urlParameter = "?bvid=" + bvid;
+        JsonObject response = client.get(APIList.VIDEO_VIEW + urlParameter);
+        if (response.get(BilibiliResponseConstant.CODE).getAsInt() == BilibiliResponseConstant.CODE_SUCCESS) {
+            JsonObject data = response.getAsJsonObject(BilibiliResponseConstant.DATA);
+            String up = data.getAsJsonObject(BilibiliResponseConstant.OWNER).get(BilibiliResponseConstant.NAME).getAsString();
+            String title = data.get(BilibiliResponseConstant.TITLE).getAsString();
+            return up + ":" + title;
+        } else {
+            log.warn("Warning! Can not get title! Bilibili Message:[{}]", response.get(BilibiliResponseConstant.MESSAGE));
+            return "No title!";
+        }
+    }
+
+    /**
      * 领取大会员福利
      * @param type 1=B币券，2=大会员福利
      */

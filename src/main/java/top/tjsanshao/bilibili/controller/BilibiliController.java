@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.tjsanshao.bilibili.action.TaskStatus;
 import top.tjsanshao.bilibili.action.UserCheck;
+import top.tjsanshao.bilibili.action.VideoWatch;
 import top.tjsanshao.bilibili.api.OftenAPI;
 import top.tjsanshao.bilibili.current.CurrentUser;
 
@@ -24,6 +25,8 @@ public class BilibiliController {
     private UserCheck userCheck;
     @Resource
     private TaskStatus taskStatus;
+    @Resource
+    private VideoWatch videoWatch;
 
     @Resource
     private CurrentUser currentUser;
@@ -43,6 +46,12 @@ public class BilibiliController {
     @RequestMapping("/current")
     public CurrentUser current() {
         return currentUser;
+    }
+
+    @RequestMapping("/videoWatch")
+    public String videoWatch() {
+        videoWatch.act();
+        return "success";
     }
 
     @RequestMapping("/coinBalance")
