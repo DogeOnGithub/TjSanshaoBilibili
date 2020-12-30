@@ -12,6 +12,7 @@ import top.tjsanshao.bilibili.action.VideoShare;
 import top.tjsanshao.bilibili.action.VideoWatch;
 import top.tjsanshao.bilibili.api.OftenAPI;
 import top.tjsanshao.bilibili.current.CurrentUser;
+import top.tjsanshao.bilibili.request.DailyCoinExpRequest;
 
 import javax.annotation.Resource;
 
@@ -25,7 +26,8 @@ import javax.annotation.Resource;
 public class BilibiliController {
     @Resource
     private OftenAPI often;
-
+    @Resource
+    private DailyCoinExpRequest dailyCoinExpRequest;
     @Resource
     private UserCheck userCheck;
     @Resource
@@ -103,5 +105,11 @@ public class BilibiliController {
     public String coinBalance() {
         double balance = often.getCoinBalance();
         return String.valueOf(balance);
+    }
+
+    @RequestMapping("/dailyCoinExp")
+    public String dailyCoinExp() {
+        int exp = dailyCoinExpRequest.dailyCoinExp();
+        return String.valueOf(exp);
     }
 }
