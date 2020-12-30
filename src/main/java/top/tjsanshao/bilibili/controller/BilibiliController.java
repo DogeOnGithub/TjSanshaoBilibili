@@ -2,6 +2,7 @@ package top.tjsanshao.bilibili.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.tjsanshao.bilibili.action.MangaCheckIn;
 import top.tjsanshao.bilibili.action.TaskStatus;
 import top.tjsanshao.bilibili.action.UserCheck;
 import top.tjsanshao.bilibili.action.VideoShare;
@@ -30,6 +31,8 @@ public class BilibiliController {
     private VideoWatch videoWatch;
     @Resource
     private VideoShare videoShare;
+    @Resource
+    private MangaCheckIn mangaCheckIn;
 
     @Resource
     private CurrentUser currentUser;
@@ -60,6 +63,12 @@ public class BilibiliController {
     @RequestMapping("/videoShare")
     public String videoShare() {
         videoShare.act();
+        return "success";
+    }
+
+    @RequestMapping("/mangaCheck")
+    public String mangaCheck() {
+        mangaCheckIn.act();
         return "success";
     }
 
