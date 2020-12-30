@@ -10,6 +10,7 @@ public class BilibiliResponseConstant {
     public final static int CODE_SUCCESS = 0;
     public final static String CODE = "code";
     public final static String MESSAGE = "message";
+    public final static String MSG = "msg";
     public final static String DATA = "data";
     public final static String MONEY = "money";
     public final static String IS_LOGIN = "isLogin";

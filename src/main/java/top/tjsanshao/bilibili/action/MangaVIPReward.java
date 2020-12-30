@@ -34,6 +34,7 @@ public class MangaVIPReward implements Action {
              * 为方便直接取1，为领取漫读劵，暂时不取其他的值
              */
             int reasonId = 1;
+            // 参数为json格式
             String requestBody = "{\"reason_id\":" + reasonId + "}";
             JsonObject response = client.post(APIList.VIP_REWARD_COMIC, requestBody);
             if (response.get(BilibiliResponseConstant.CODE).getAsInt() == BilibiliResponseConstant.CODE_SUCCESS) {
@@ -41,7 +42,7 @@ public class MangaVIPReward implements Action {
                 int amount = data.get(BilibiliResponseConstant.AMOUNT).getAsInt();
                 log.info("大会员漫画特权领到啦！这次嫖到了 {} 张漫读券！", amount);
             } else {
-                log.warn("大会员不中用了，没东西领，因为{}", response.get(BilibiliResponseConstant.MESSAGE).getAsString());
+                log.warn("大会员不中用了，没东西领，因为{}", response.get(BilibiliResponseConstant.MSG).getAsString());
             }
         } else {
             log.error("不会吧！这年头居然有人不是大会员？！？");
