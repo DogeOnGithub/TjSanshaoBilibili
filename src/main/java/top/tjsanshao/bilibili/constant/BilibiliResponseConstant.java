@@ -24,4 +24,6 @@ public class BilibiliResponseConstant {
     public final static String STATUS = "status";
     public final static String ORDER_NO = "order_no";
     public final static String SILVER = "silver";
+    public final static String TEXT = "text";
+    public final static String SPECIAL_TEXT = "specialText";
 }
