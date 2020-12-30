@@ -19,4 +19,8 @@ public class BilibiliResponseConstant {
     public final static String OWNER = "owner";
     public final static String NAME = "name";
     public final static String TITLE = "title";
+    public final static String BP_WALLET = "bp_wallet";
+    public final static String COUPON_BALANCE = "coupon_balance";
+    public final static String STATUS = "status";
+    public final static String ORDER_NO = "order_no";
 }

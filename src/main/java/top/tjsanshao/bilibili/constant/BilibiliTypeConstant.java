@@ -15,4 +15,18 @@ public class BilibiliTypeConstant {
      * 大会员福利/权益
      */
     public final static int VIP_REWARD = 2;
+
+    /**
+     * 普通会员
+     */
+    public final static int NORMAL_VIP = 0;
+    /**
+     * 月度会员
+     */
+    public final static int MONTH_VIP = 1;
+
+    /**
+     * 充电成功
+     */
+    public final static int CHARGE_SUCCESS = 4;
 }
