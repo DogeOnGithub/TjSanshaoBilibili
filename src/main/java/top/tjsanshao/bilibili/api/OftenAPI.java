@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @date 2020-12-29 15:55
  */
 @Slf4j
-@Component
+@Component("often")
 public class OftenAPI {
     @Resource
     private BilibiliRequestClient client;

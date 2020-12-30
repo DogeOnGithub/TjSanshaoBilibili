@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 @RestController
 public class BilibiliController {
     @Resource
-    private OftenAPI oftenAPI;
+    private OftenAPI often;
 
     @Resource
     private UserCheck userCheck;
@@ -56,7 +56,7 @@ public class BilibiliController {
 
     @RequestMapping("/coinBalance")
     public String coinBalance() {
-        double balance = oftenAPI.getCoinBalance();
+        double balance = often.getCoinBalance();
         return String.valueOf(balance);
     }
 }

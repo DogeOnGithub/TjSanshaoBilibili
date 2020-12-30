@@ -23,7 +23,7 @@ import java.util.Random;
 @Component
 public class VideoWatch implements Action {
     @Resource
-    private OftenAPI oftenAPI;
+    private OftenAPI often;
 
     @Resource
     private CurrentUser currentUser;
@@ -39,7 +39,7 @@ public class VideoWatch implements Action {
             int playedTime = new Random().nextInt(90) + 1;
             String postBody = "bvid=" + randomVideo + "&played_time=" + playedTime;
             JsonObject response = client.post(APIList.VIDEO_HEART_BEAT, postBody);
-            String title = oftenAPI.videoTitle(randomVideo);
+            String title = often.videoTitle(randomVideo);
             if (response.get(BilibiliResponseConstant.CODE).getAsInt() == BilibiliResponseConstant.CODE_SUCCESS) {
                 log.info("视频【{}】播放成功，已观看至第{}秒", title, playedTime);
             } else {
