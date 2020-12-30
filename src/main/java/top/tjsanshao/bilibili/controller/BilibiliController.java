@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.tjsanshao.bilibili.action.LiveCheckIn;
 import top.tjsanshao.bilibili.action.MangaCheckIn;
+import top.tjsanshao.bilibili.action.MangaVIPReward;
 import top.tjsanshao.bilibili.action.Silver2Coin;
 import top.tjsanshao.bilibili.action.TaskStatus;
 import top.tjsanshao.bilibili.action.UserCheck;
@@ -39,6 +40,8 @@ public class BilibiliController {
     private Silver2Coin silver2Coin;
     @Resource
     private LiveCheckIn liveCheckIn;
+    @Resource
+    private MangaVIPReward mangaVIPReward;
 
     @Resource
     private CurrentUser currentUser;
@@ -87,6 +90,12 @@ public class BilibiliController {
     @RequestMapping("/liveCheck")
     public String liveCheck() {
         liveCheckIn.act();
+        return "success";
+    }
+
+    @RequestMapping("/mangaReward")
+    public String mangaReward() {
+        mangaVIPReward.act();
         return "success";
     }
 

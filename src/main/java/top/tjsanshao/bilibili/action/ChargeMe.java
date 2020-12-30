@@ -40,7 +40,7 @@ public class ChargeMe implements Action {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
         int date = calendar.get(Calendar.DATE);
         int vipType = 0;
-        if (currentUser.getUserInfo().getVipStatus() == 1) {
+        if (currentUser.getUserInfo().getVipStatus() == BilibiliTypeConstant.VIP_EFFECT) {
             // 当vipStatus == 1时，vip才有效
             vipType = currentUser.getUserInfo().getVipType();
             if (date == 1) {

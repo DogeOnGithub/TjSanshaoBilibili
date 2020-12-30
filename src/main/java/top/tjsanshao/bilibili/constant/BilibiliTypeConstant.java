@@ -17,6 +17,11 @@ public class BilibiliTypeConstant {
     public final static int VIP_REWARD = 2;
 
     /**
+     * 大会员有效
+     */
+    public final static int VIP_EFFECT = 1;
+
+    /**
      * 普通会员
      */
     public final static int NORMAL_VIP = 0;
