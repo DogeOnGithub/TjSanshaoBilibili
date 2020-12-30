@@ -24,14 +24,14 @@ public class APIList {
     public final static String COIN_EXP_NEW = "https://api.bilibili.com/x/web-interface/coin/today/exp";
 
     /**
-     * 硬币换银瓜子
+     * 银瓜子换硬币
      */
-    public final static String SLIVER_TO_COIN = "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin";
+    public final static String SILVER_TO_COIN = "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin";
 
     /**
      * 查询银瓜子兑换状态
      */
-    public final static String SLIVER_TO_COIN_STATUS = "https://api.live.bilibili.com/pay/v1/Exchange/getStatus";
+    public final static String SILVER_TO_COIN_STATUS = "https://api.live.bilibili.com/pay/v1/Exchange/getStatus";
 
     /**
      * 上报观看进度

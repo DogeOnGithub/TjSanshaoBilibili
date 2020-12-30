@@ -28,4 +28,10 @@ public class Init {
         taskStatus.act();
         log.info("current user init successfully...");
     }
+
+    public void refresh() {
+        userCheck.act();
+        taskStatus.act();
+        log.info("current user refresh successfully...");
+    }
 }

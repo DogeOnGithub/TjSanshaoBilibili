@@ -23,4 +23,5 @@ public class BilibiliResponseConstant {
     public final static String COUPON_BALANCE = "coupon_balance";
     public final static String STATUS = "status";
     public final static String ORDER_NO = "order_no";
+    public final static String SILVER = "silver";
 }
