@@ -2,6 +2,7 @@ package top.tjsanshao.bilibili.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.tjsanshao.bilibili.action.ChargeMe;
 import top.tjsanshao.bilibili.action.Coin;
 import top.tjsanshao.bilibili.action.LiveCheckIn;
 import top.tjsanshao.bilibili.action.MangaCheckIn;
@@ -49,6 +50,8 @@ public class BilibiliController {
     private MangaVIPReward mangaVIPReward;
     @Resource
     private Coin coin;
+    @Resource
+    private ChargeMe chargeMe;
 
     @RequestMapping("/login")
     public String login() {
@@ -77,6 +80,7 @@ public class BilibiliController {
         info.put("silver2Coin", CurrentUser.silver2Coin);
         info.put("videoShare", CurrentUser.videoShare);
         info.put("videoWatch", CurrentUser.videoWatch);
+        info.put("actionResult", CurrentUser.actionResult);
         return info;
     }
 
@@ -119,6 +123,12 @@ public class BilibiliController {
     @RequestMapping("/coin")
     public String coin() {
         coin.act();
+        return "success";
+    }
+
+    @RequestMapping("/chargeMe")
+    public String chargeMe() {
+        chargeMe.act();
         return "success";
     }
 

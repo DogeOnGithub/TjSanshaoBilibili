@@ -7,6 +7,7 @@ import top.tjsanshao.bilibili.request.UserCheck;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.HashMap;
 
 /**
  * init current user info
@@ -35,6 +36,7 @@ public class Init {
         CurrentUser.silver2Coin = true;
         CurrentUser.videoShare = true;
         CurrentUser.videoWatch = false;
+        CurrentUser.actionResult = new HashMap<>(1 << 3);
         log.info("current user init successfully...");
     }
 

@@ -7,9 +7,11 @@ import top.tjsanshao.bilibili.api.APIList;
 import top.tjsanshao.bilibili.api.OftenAPI;
 import top.tjsanshao.bilibili.constant.BilibiliResponseConstant;
 import top.tjsanshao.bilibili.constant.BilibiliTypeConstant;
+import top.tjsanshao.bilibili.current.ActionResult;
 import top.tjsanshao.bilibili.current.CurrentUser;
 import top.tjsanshao.bilibili.http.BilibiliRequestClient;
 import top.tjsanshao.bilibili.login.PassCheck;
+import top.tjsanshao.bilibili.util.TjSanshaoDateUtil;
 
 import javax.annotation.Resource;
 import java.util.Calendar;
@@ -35,8 +37,15 @@ public class ChargeMe implements Action {
 
     @Override
     public void act() {
+        ActionResult ar = new ActionResult();
+        ar.setAction("自动充电");
+
         if (!CurrentUser.chargeMe) {
             log.warn("自动充电功能未开启！");
+            ar.setActionResultCode(0);
+            ar.setActionResultMessage("啊？原来是没开自动充电...");
+            ar.setActionFinishedTime(TjSanshaoDateUtil.now());
+            return;
         }
 
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
@@ -53,6 +62,10 @@ public class ChargeMe implements Action {
         }
         if (vipType == BilibiliTypeConstant.NORMAL_VIP || vipType == BilibiliTypeConstant.MONTH_VIP) {
             // 普通会员和月度会员不赠送B币券，无法充电
+            log.warn("不是年度大会员！");
+            ar.setActionResultCode(0);
+            ar.setActionResultMessage("啊？我竟然不是年度大会员？！？！");
+            ar.setActionFinishedTime(TjSanshaoDateUtil.now());
             return;
         }
 
@@ -89,13 +102,36 @@ public class ChargeMe implements Action {
                     log.info("本次充值使用了：{}个B币券", couponBalance);
                     String order = data.get(BilibiliResponseConstant.ORDER_NO).getAsString();
                     this.chargeComment(order);
+
+                    ar.setActionResultCode(0);
+                    ar.setBilibiliCode(0);
+                    String arMsg = String.format("月底啦，给自己充电成功啦！白送的B币券没有浪费哦！这次充电用掉了%d个B币券", couponBalance);
+                    ar.setActionResultMessage(arMsg);
+                    ar.setActionFinishedTime(TjSanshaoDateUtil.now());
                 } else {
                     log.warn("糟糕...充电失败了...原因竟然是这样：{}", response);
+                    ar.setActionResultCode(0);
+                    ar.setBilibiliCode(0);
+                    String arMsg = String.format("糟糕...充电失败了...原因竟然是这样：%s", response.get(BilibiliResponseConstant.MESSAGE).getAsString());
+                    ar.setActionResultMessage(arMsg);
+                    ar.setActionFinishedTime(TjSanshaoDateUtil.now());
                 }
             } else {
-                log.warn("糟糕...充电失败了...原因竟然是这样：{}", response);
+                log.warn("糟糕...B站不让我充电...原因竟然是这样：{}", response);
+                int code = response.get(BilibiliResponseConstant.CODE).getAsInt();
+                ar.setActionResultCode(code);
+                ar.setBilibiliCode(code);
+                String arMsg = String.format("糟糕...B站不让我充电...原因竟然是这样：%s", response.get(BilibiliResponseConstant.MESSAGE).getAsString());
+                ar.setActionResultMessage(arMsg);
+                ar.setActionFinishedTime(TjSanshaoDateUtil.now());
             }
+        } else {
+            log.warn("shit...今天不是28号，不充电...");
+            ar.setActionResultCode(0);
+            ar.setActionResultMessage("shit...今天不是28号，不充电...");
+            ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }
+        CurrentUser.actionResult.put("ChargeMe", ar);
     }
 
     /**

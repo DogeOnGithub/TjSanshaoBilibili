@@ -6,11 +6,13 @@ import org.springframework.stereotype.Component;
 import top.tjsanshao.bilibili.api.APIList;
 import top.tjsanshao.bilibili.api.OftenAPI;
 import top.tjsanshao.bilibili.constant.BilibiliResponseConstant;
+import top.tjsanshao.bilibili.current.ActionResult;
 import top.tjsanshao.bilibili.current.CurrentUser;
 import top.tjsanshao.bilibili.http.BilibiliRequestClient;
 import top.tjsanshao.bilibili.login.PassCheck;
 import top.tjsanshao.bilibili.request.CoinRequest;
 import top.tjsanshao.bilibili.request.VideoPullRequest;
+import top.tjsanshao.bilibili.util.TjSanshaoDateUtil;
 
 import javax.annotation.Resource;
 import java.util.Random;
@@ -42,12 +44,25 @@ public class Coin implements Action {
 
     @Override
     public void act() {
+        ActionResult ar = new ActionResult();
+        ar.setAction("自动投币");
+
         if (!CurrentUser.coin) {
             log.warn("自动投币功能未开启！");
+            ar.setActionResultCode(0);
+            ar.setActionResultMessage("尊重一下UP🐖，币要自己去投");
+            ar.setActionFinishedTime(TjSanshaoDateUtil.now());
+            CurrentUser.actionResult.put("Coin", ar);
+            return;
         }
 
         int dailyCoinUsed = coinRequest.dailyCoinUsed();
         if (dailyCoinUsed >= MAX_AUTO_COIN) {
+            log.warn("已经超过每天投币获取经验值上限！");
+            ar.setActionResultCode(0);
+            ar.setActionResultMessage("今天早就投超5个币了，还想投就自己手动投");
+            ar.setActionFinishedTime(TjSanshaoDateUtil.now());
+            CurrentUser.actionResult.put("Coin", ar);
             return;
         }
         int needCoins = MAX_AUTO_COIN - dailyCoinUsed;
@@ -66,6 +81,8 @@ public class Coin implements Action {
             if (isCoin) {
                 // 投过币
                 log.info("这个视频 【{}】 已经投过币了额...", title);
+                String msg = String.format("这个视频 【%s】 已经投过币了额...\n", title);
+                ar.setActionResultMessage(ar.getActionResultMessage() + msg);
                 continue;
             }
             String requestBody = "bvid=" + av
@@ -77,9 +94,14 @@ public class Coin implements Action {
             if (response.get(BilibiliResponseConstant.CODE).getAsInt() == BilibiliResponseConstant.CODE_SUCCESS) {
                 // 投币成功
                 log.info("给视频 【{}】 投了 {} 个币", title, 1);
+                String msg = String.format("给视频 【%s】 投了 %d 个币\n", title, 1);
+                ar.setActionResultMessage(ar.getActionResultMessage() + msg);
                 needCoins--;
             } else {
-                log.info("给视频 【{}】 投币失败了额，因为{}", title, response.get(BilibiliResponseConstant.MESSAGE).getAsString());
+                String errMsg = response.get(BilibiliResponseConstant.MESSAGE).getAsString();
+                log.info("给视频 【{}】 投币失败了额，因为{}", title, errMsg);
+                String msg = String.format("给视频 【%s】 投币失败了额，因为%s\n", title, errMsg);
+                ar.setActionResultMessage(ar.getActionResultMessage() + msg);
             }
             try {
                 Random random = new Random();
@@ -88,7 +110,13 @@ public class Coin implements Action {
                 Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
                 log.error("自动投币过程异常", e);
+                ar.setActionResultCode(9999);
+                ar.setActionResultMessage("自动投币过程异常");
             }
         }
+        ar.setActionResultCode(0);
+        ar.setBilibiliCode(0);
+        ar.setActionResultMessage("今天已经自动投掉了5个币了");
+        CurrentUser.actionResult.put("Coin", ar);
     }
 }

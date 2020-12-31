@@ -3,6 +3,8 @@ package top.tjsanshao.bilibili.current;
 import top.tjsanshao.bilibili.data.TaskStatus;
 import top.tjsanshao.bilibili.data.UserInfo;
 
+import java.util.HashMap;
+
 /**
  * current user
  *
@@ -21,4 +23,6 @@ public class CurrentUser {
     public static boolean silver2Coin;
     public static boolean videoShare;
     public static boolean videoWatch;
+
+    public static HashMap<String, ActionResult> actionResult;
 }
