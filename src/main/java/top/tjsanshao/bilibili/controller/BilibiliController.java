@@ -64,6 +64,8 @@ public class BilibiliController {
 
     @RequestMapping("/current")
     public Map<String, Object> current() {
+        userCheck.userStatus();
+        taskStatus.taskStatus();
         HashMap<String, Object> info = new HashMap<>(2);
         info.put("userInfo", CurrentUser.userInfo);
         info.put("taskStatus", CurrentUser.taskStatus);
