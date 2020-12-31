@@ -2,8 +2,8 @@ package top.tjsanshao.bilibili.current;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import top.tjsanshao.bilibili.action.TaskStatus;
-import top.tjsanshao.bilibili.action.UserCheck;
+import top.tjsanshao.bilibili.request.TaskStatus;
+import top.tjsanshao.bilibili.request.UserCheck;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -24,14 +24,14 @@ public class Init {
 
     @PostConstruct
     public void init() {
-        userCheck.act();
-        taskStatus.act();
+        userCheck.userStatus();
+        taskStatus.taskStatus();
         log.info("current user init successfully...");
     }
 
     public void refresh() {
-        userCheck.act();
-        taskStatus.act();
+        userCheck.userStatus();
+        taskStatus.taskStatus();
         log.info("current user refresh successfully...");
     }
 }

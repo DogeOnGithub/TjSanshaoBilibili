@@ -23,8 +23,6 @@ public class Silver2Coin implements Action {
     @Resource
     private BilibiliRequestClient client;
     @Resource
-    private CurrentUser currentUser;
-    @Resource
     private Init init;
 
     @Override
@@ -39,6 +37,6 @@ public class Silver2Coin implements Action {
         int sliver = statusResponse.getAsJsonObject(BilibiliResponseConstant.DATA).get(BilibiliResponseConstant.SILVER).getAsInt();
         log.info("现在还剩 {} 个银瓜子了...", sliver);
         init.refresh();
-        log.info("现在的硬币还剩 {} 个哦", currentUser.getUserInfo().getMoney());
+        log.info("现在的硬币还剩 {} 个哦", CurrentUser.userInfo.getMoney());
     }
 }

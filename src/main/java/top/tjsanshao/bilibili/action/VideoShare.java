@@ -26,8 +26,6 @@ public class VideoShare implements Action {
     private OftenAPI often;
 
     @Resource
-    private CurrentUser currentUser;
-    @Resource
     private BilibiliRequestClient client;
     @Resource
     private VideoPullRequest videoPullRequest;
@@ -37,7 +35,7 @@ public class VideoShare implements Action {
     @Override
     public void act() {
         String randomVideo = videoPullRequest.randomVideo();
-        if (!currentUser.getTaskStatus().isShare()) {
+        if (!CurrentUser.taskStatus.isShare()) {
             String postBody = "bvid=" + randomVideo + "&csrf=" + passCheck.getBiliJct();
             JsonObject response = client.post(APIList.AV_SHARE, postBody);
             String title = often.videoTitle(randomVideo);

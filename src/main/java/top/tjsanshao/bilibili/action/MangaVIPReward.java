@@ -22,12 +22,10 @@ import javax.annotation.Resource;
 public class MangaVIPReward implements Action {
     @Resource
     private BilibiliRequestClient client;
-    @Resource
-    private CurrentUser currentUser;
 
     @Override
     public void act() {
-        if (currentUser.getUserInfo().getVipStatus() == BilibiliTypeConstant.VIP_EFFECT) {
+        if (CurrentUser.userInfo.getVipStatus() == BilibiliTypeConstant.VIP_EFFECT) {
             /*
              * 权益号，由https://api.bilibili.com/x/vip/privilege/my
              * 得到权益号数组，取值范围为数组中的整数

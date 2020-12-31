@@ -34,8 +34,6 @@ public class Coin implements Action {
     private CoinRequest coinRequest;
     @Resource
     private VideoPullRequest videoPullRequest;
-    @Resource
-    private CurrentUser currentUser;
 
     /**
      * 最大投币
@@ -49,13 +47,13 @@ public class Coin implements Action {
             return;
         }
         int needCoins = MAX_AUTO_COIN - dailyCoinUsed;
-        int coins = (int) currentUser.getUserInfo().getMoney();
+        int coins = (int) CurrentUser.userInfo.getMoney();
         if (needCoins > coins) {
             // 硬币余额不足需要投币数的时候，改为投剩下的硬币
             needCoins = coins;
         }
 
-        log.info("自动投币执行前剩余 {} 个硬币", currentUser.getUserInfo().getMoney());
+        log.info("自动投币执行前剩余 {} 个硬币", CurrentUser.userInfo.getMoney());
 
         while (needCoins > 0 && needCoins <= MAX_AUTO_COIN) {
             String av = videoPullRequest.randomVideo();

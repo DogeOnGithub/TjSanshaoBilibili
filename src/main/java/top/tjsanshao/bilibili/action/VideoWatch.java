@@ -26,8 +26,6 @@ public class VideoWatch implements Action {
     private OftenAPI often;
 
     @Resource
-    private CurrentUser currentUser;
-    @Resource
     private BilibiliRequestClient client;
     @Resource
     private VideoPullRequest videoPullRequest;
@@ -35,7 +33,7 @@ public class VideoWatch implements Action {
     @Override
     public void act() {
         String randomVideo = videoPullRequest.randomVideo();
-        if (!currentUser.getTaskStatus().isWatch()) {
+        if (!CurrentUser.taskStatus.isWatch()) {
             int playedTime = new Random().nextInt(90) + 1;
             String postBody = "bvid=" + randomVideo + "&played_time=" + playedTime;
             JsonObject response = client.post(APIList.VIDEO_HEART_BEAT, postBody);

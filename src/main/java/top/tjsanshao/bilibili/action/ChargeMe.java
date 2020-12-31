@@ -29,8 +29,6 @@ public class ChargeMe implements Action {
     private OftenAPI often;
 
     @Resource
-    private CurrentUser currentUser;
-    @Resource
     private BilibiliRequestClient client;
     @Resource
     private PassCheck passCheck;
@@ -40,9 +38,9 @@ public class ChargeMe implements Action {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
         int date = calendar.get(Calendar.DATE);
         int vipType = 0;
-        if (currentUser.getUserInfo().getVipStatus() == BilibiliTypeConstant.VIP_EFFECT) {
+        if (CurrentUser.userInfo.getVipStatus() == BilibiliTypeConstant.VIP_EFFECT) {
             // 当vipStatus == 1时，vip才有效
-            vipType = currentUser.getUserInfo().getVipType();
+            vipType = CurrentUser.userInfo.getVipType();
             if (date == 1) {
                 // 每月1号领大会员福利
                 often.vipPrivilege(BilibiliTypeConstant.B_COIN);
@@ -59,8 +57,8 @@ public class ChargeMe implements Action {
         // B币券余额
         int couponBalance = 0;
 
-        if (Objects.nonNull(currentUser.getUserInfo())) {
-            couponBalance = currentUser.getUserInfo().getWallet().getCoupon_balance();
+        if (Objects.nonNull(CurrentUser.userInfo)) {
+            couponBalance = CurrentUser.userInfo.getWallet().getCoupon_balance();
         } else {
             JsonObject response = client.get(APIList.CHARGE_QUERY + "?mid=" + userId);
             if (response.get(BilibiliResponseConstant.CODE).getAsInt() == BilibiliResponseConstant.CODE_SUCCESS) {

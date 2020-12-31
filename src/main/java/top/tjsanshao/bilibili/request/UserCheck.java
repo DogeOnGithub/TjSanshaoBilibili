@@ -1,4 +1,4 @@
-package top.tjsanshao.bilibili.action;
+package top.tjsanshao.bilibili.request;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -21,14 +21,11 @@ import java.util.Objects;
  */
 @Slf4j
 @Component
-public class UserCheck implements Action {
-    @Resource
-    private CurrentUser currentUser;
+public class UserCheck {
     @Resource
     private BilibiliRequestClient client;
 
-    @Override
-    public void act() {
+    public void userStatus() {
         JsonObject loginInfo = client.get(APIList.LOGIN);
         if (Objects.isNull(loginInfo)) {
             log.info("用户信息请求失败，如果是412错误，请更换UA，412问题仅影响用户信息确认，不影响任务");
@@ -36,10 +33,9 @@ public class UserCheck implements Action {
             if (loginInfo.get(BilibiliResponseConstant.CODE).getAsInt() == BilibiliResponseConstant.CODE_SUCCESS) {
                 if (loginInfo.get(BilibiliResponseConstant.DATA).getAsJsonObject().get(BilibiliResponseConstant.IS_LOGIN).getAsBoolean()) {
                     // 登录有效
-                    UserInfo userInfo = new Gson().fromJson(loginInfo.get(BilibiliResponseConstant.DATA), UserInfo.class);
-                    currentUser.setUserInfo(userInfo);
+                    CurrentUser.userInfo = new Gson().fromJson(loginInfo.get(BilibiliResponseConstant.DATA), UserInfo.class);
                     log.info("登录有效！");
-                    log.info("当前用户：{}", currentUser.getUserInfo());
+                    log.info("当前用户：{}", CurrentUser.userInfo);
                 }
             } else {
                 log.info(loginInfo.getAsString());

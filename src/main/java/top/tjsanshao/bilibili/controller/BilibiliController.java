@@ -7,8 +7,8 @@ import top.tjsanshao.bilibili.action.LiveCheckIn;
 import top.tjsanshao.bilibili.action.MangaCheckIn;
 import top.tjsanshao.bilibili.action.MangaVIPReward;
 import top.tjsanshao.bilibili.action.Silver2Coin;
-import top.tjsanshao.bilibili.action.TaskStatus;
-import top.tjsanshao.bilibili.action.UserCheck;
+import top.tjsanshao.bilibili.request.TaskStatus;
+import top.tjsanshao.bilibili.request.UserCheck;
 import top.tjsanshao.bilibili.action.VideoShare;
 import top.tjsanshao.bilibili.action.VideoWatch;
 import top.tjsanshao.bilibili.api.OftenAPI;
@@ -16,6 +16,8 @@ import top.tjsanshao.bilibili.current.CurrentUser;
 import top.tjsanshao.bilibili.request.CoinRequest;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * controller
@@ -48,24 +50,24 @@ public class BilibiliController {
     @Resource
     private Coin coin;
 
-    @Resource
-    private CurrentUser currentUser;
-
     @RequestMapping("/login")
     public String login() {
-        userCheck.act();
+        userCheck.userStatus();
         return "success";
     }
 
     @RequestMapping("/taskStatus")
     public String taskStatus() {
-        taskStatus.act();
+        taskStatus.taskStatus();
         return "success";
     }
 
     @RequestMapping("/current")
-    public CurrentUser current() {
-        return currentUser;
+    public Map<String, Object> current() {
+        HashMap<String, Object> info = new HashMap<>(2);
+        info.put("userInfo", CurrentUser.userInfo);
+        info.put("taskStatus", CurrentUser.taskStatus);
+        return info;
     }
 
     @RequestMapping("/videoWatch")
