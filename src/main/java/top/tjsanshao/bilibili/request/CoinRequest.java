@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import top.tjsanshao.bilibili.api.APIList;
 import top.tjsanshao.bilibili.constant.BilibiliResponseConstant;
 import top.tjsanshao.bilibili.http.BilibiliRequestClient;
-import top.tjsanshao.bilibili.login.PassCheck;
 
 import javax.annotation.Resource;
 
@@ -18,7 +17,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-public class DailyCoinExpRequest {
+public class CoinRequest {
     @Resource
     private BilibiliRequestClient client;
 
@@ -33,5 +32,15 @@ public class DailyCoinExpRequest {
 
     public int dailyCoinUsed() {
         return this.dailyCoinExp() / 10;
+    }
+
+    public boolean isCoin(String av) {
+        String urlParameter = "?bvid=" + av;
+        JsonObject response = client.get(APIList.IS_COIN + urlParameter);
+        if (response.get(BilibiliResponseConstant.CODE).getAsInt() == BilibiliResponseConstant.CODE_SUCCESS) {
+            int coins = response.getAsJsonObject(BilibiliResponseConstant.DATA).get(BilibiliResponseConstant.MULTIPLY).getAsInt();
+            return coins > 0;
+        }
+        return false;
     }
 }

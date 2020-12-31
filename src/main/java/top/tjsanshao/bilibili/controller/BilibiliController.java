@@ -2,6 +2,7 @@ package top.tjsanshao.bilibili.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.tjsanshao.bilibili.action.Coin;
 import top.tjsanshao.bilibili.action.LiveCheckIn;
 import top.tjsanshao.bilibili.action.MangaCheckIn;
 import top.tjsanshao.bilibili.action.MangaVIPReward;
@@ -12,7 +13,7 @@ import top.tjsanshao.bilibili.action.VideoShare;
 import top.tjsanshao.bilibili.action.VideoWatch;
 import top.tjsanshao.bilibili.api.OftenAPI;
 import top.tjsanshao.bilibili.current.CurrentUser;
-import top.tjsanshao.bilibili.request.DailyCoinExpRequest;
+import top.tjsanshao.bilibili.request.CoinRequest;
 
 import javax.annotation.Resource;
 
@@ -27,7 +28,7 @@ public class BilibiliController {
     @Resource
     private OftenAPI often;
     @Resource
-    private DailyCoinExpRequest dailyCoinExpRequest;
+    private CoinRequest coinRequest;
     @Resource
     private UserCheck userCheck;
     @Resource
@@ -44,6 +45,8 @@ public class BilibiliController {
     private LiveCheckIn liveCheckIn;
     @Resource
     private MangaVIPReward mangaVIPReward;
+    @Resource
+    private Coin coin;
 
     @Resource
     private CurrentUser currentUser;
@@ -101,6 +104,12 @@ public class BilibiliController {
         return "success";
     }
 
+    @RequestMapping("/coin")
+    public String coin() {
+        coin.act();
+        return "success";
+    }
+
     @RequestMapping("/coinBalance")
     public String coinBalance() {
         double balance = often.getCoinBalance();
@@ -109,7 +118,7 @@ public class BilibiliController {
 
     @RequestMapping("/dailyCoinExp")
     public String dailyCoinExp() {
-        int exp = dailyCoinExpRequest.dailyCoinExp();
+        int exp = coinRequest.dailyCoinExp();
         return String.valueOf(exp);
     }
 }

@@ -28,4 +28,5 @@ public class BilibiliResponseConstant {
     public final static String TEXT = "text";
     public final static String SPECIAL_TEXT = "specialText";
     public final static String AMOUNT = "amount";
+    public final static String MULTIPLY = "multiply";
 }
