@@ -25,6 +25,9 @@ public class MangaVIPReward implements Action {
 
     @Override
     public void act() {
+        if (!CurrentUser.mangaVIPReward) {
+            log.warn("漫画大会员权益领取功能未开启！");
+        }
         if (CurrentUser.userInfo.getVipStatus() == BilibiliTypeConstant.VIP_EFFECT) {
             /*
              * 权益号，由https://api.bilibili.com/x/vip/privilege/my

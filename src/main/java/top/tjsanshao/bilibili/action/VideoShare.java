@@ -34,6 +34,9 @@ public class VideoShare implements Action {
 
     @Override
     public void act() {
+        if (!CurrentUser.videoShare) {
+            log.warn("自动视频分享功能未开启！");
+        }
         String randomVideo = videoPullRequest.randomVideo();
         if (!CurrentUser.taskStatus.isShare()) {
             String postBody = "bvid=" + randomVideo + "&csrf=" + passCheck.getBiliJct();

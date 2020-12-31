@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import top.tjsanshao.bilibili.api.APIList;
 import top.tjsanshao.bilibili.constant.BilibiliResponseConstant;
+import top.tjsanshao.bilibili.current.CurrentUser;
 import top.tjsanshao.bilibili.http.BilibiliRequestClient;
 
 import javax.annotation.Resource;
@@ -23,6 +24,9 @@ public class MangaCheckIn implements Action {
 
     @Override
     public void act() {
+        if (!CurrentUser.mangaCheckIn) {
+            log.warn("漫画打卡功能为开启！");
+        }
         String requestBody = "platform=ios";
         JsonObject response = client.post(APIList.MANAGE, requestBody);
         if (response.get(BilibiliResponseConstant.CODE).getAsInt() == BilibiliResponseConstant.CODE_SUCCESS) {

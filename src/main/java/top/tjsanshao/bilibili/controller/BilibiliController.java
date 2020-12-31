@@ -66,9 +66,17 @@ public class BilibiliController {
     public Map<String, Object> current() {
         userCheck.userStatus();
         taskStatus.taskStatus();
-        HashMap<String, Object> info = new HashMap<>(2);
+        HashMap<String, Object> info = new HashMap<>(10);
         info.put("userInfo", CurrentUser.userInfo);
         info.put("taskStatus", CurrentUser.taskStatus);
+        info.put("chargeMe", CurrentUser.chargeMe);
+        info.put("coin", CurrentUser.coin);
+        info.put("liveCheckIn", CurrentUser.liveCheckIn);
+        info.put("mangaCheckIn", CurrentUser.mangaCheckIn);
+        info.put("mangaVIPReward", CurrentUser.mangaVIPReward);
+        info.put("silver2Coin", CurrentUser.silver2Coin);
+        info.put("videoShare", CurrentUser.videoShare);
+        info.put("videoWatch", CurrentUser.videoWatch);
         return info;
     }
 

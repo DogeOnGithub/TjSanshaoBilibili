@@ -35,6 +35,10 @@ public class ChargeMe implements Action {
 
     @Override
     public void act() {
+        if (!CurrentUser.chargeMe) {
+            log.warn("自动充电功能未开启！");
+        }
+
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
         int date = calendar.get(Calendar.DATE);
         int vipType = 0;

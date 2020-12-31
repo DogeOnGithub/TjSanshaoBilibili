@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import top.tjsanshao.bilibili.api.APIList;
 import top.tjsanshao.bilibili.constant.BilibiliResponseConstant;
+import top.tjsanshao.bilibili.current.CurrentUser;
 import top.tjsanshao.bilibili.http.BilibiliRequestClient;
 
 import javax.annotation.Resource;
@@ -23,6 +24,9 @@ public class LiveCheckIn implements Action {
 
     @Override
     public void act() {
+        if (!CurrentUser.liveCheckIn) {
+            log.warn("直播打卡功能未开启！");
+        }
         JsonObject response = client.get(APIList.LIVE_CHECK_IN);
         if (response.get(BilibiliResponseConstant.CODE).getAsInt() == BilibiliResponseConstant.CODE_SUCCESS) {
             JsonObject data = response.getAsJsonObject(BilibiliResponseConstant.DATA);

@@ -42,6 +42,10 @@ public class Coin implements Action {
 
     @Override
     public void act() {
+        if (!CurrentUser.coin) {
+            log.warn("自动投币功能未开启！");
+        }
+
         int dailyCoinUsed = coinRequest.dailyCoinUsed();
         if (dailyCoinUsed >= MAX_AUTO_COIN) {
             return;

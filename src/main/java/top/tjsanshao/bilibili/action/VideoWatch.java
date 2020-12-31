@@ -32,6 +32,9 @@ public class VideoWatch implements Action {
 
     @Override
     public void act() {
+        if (!CurrentUser.videoWatch) {
+            log.warn("自动观看功能未开启！");
+        }
         String randomVideo = videoPullRequest.randomVideo();
         if (!CurrentUser.taskStatus.isWatch()) {
             int playedTime = new Random().nextInt(90) + 1;

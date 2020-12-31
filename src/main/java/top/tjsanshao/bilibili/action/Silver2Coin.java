@@ -27,6 +27,9 @@ public class Silver2Coin implements Action {
 
     @Override
     public void act() {
+        if (!CurrentUser.silver2Coin) {
+            log.warn("银瓜子换硬币功能未开启！");
+        }
         JsonObject response = client.get(APIList.SILVER_TO_COIN);
         if (response.get(BilibiliResponseConstant.CODE).getAsInt() == BilibiliResponseConstant.CODE_SUCCESS) {
             log.info("银瓜子换硬币成功了额...");
