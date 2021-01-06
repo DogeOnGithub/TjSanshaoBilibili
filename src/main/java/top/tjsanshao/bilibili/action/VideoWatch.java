@@ -33,16 +33,26 @@ public class VideoWatch implements Action {
     private VideoPullRequest videoPullRequest;
 
     @Override
+    public String actionName() {
+        return "自动观看";
+    }
+
+    @Override
+    public String resultKey() {
+        return "VideoWatch";
+    }
+
+    @Override
     public void act() {
         ActionResult ar = new ActionResult();
-        ar.setAction("自动观看");
+        ar.setAction(this.actionName());
 
         if (!CurrentUser.videoWatch) {
             log.warn("自动观看功能未开启！");
             ar.setActionResultCode(0);
             ar.setActionResultMessage("不会吧？不会真的有人不是每天上B站的吧？！？");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
-            CurrentUser.actionResult.put("videoWatch", ar);
+            CurrentUser.actionResult.put(this.resultKey(), ar);
             return;
         }
         String randomVideo = videoPullRequest.randomVideo();
@@ -75,6 +85,6 @@ public class VideoWatch implements Action {
             ar.setActionResultMessage("不会吧？？？还等自动任务？？昨晚刷完视频才睡的");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }
-        CurrentUser.actionResult.put("videoWatch", ar);
+        CurrentUser.actionResult.put(this.resultKey(), ar);
     }
 }

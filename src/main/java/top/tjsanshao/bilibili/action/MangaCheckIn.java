@@ -25,16 +25,26 @@ public class MangaCheckIn implements Action {
     private BilibiliRequestClient client;
 
     @Override
+    public String actionName() {
+        return "漫画打卡";
+    }
+
+    @Override
+    public String resultKey() {
+        return "MangaCheckIn";
+    }
+
+    @Override
     public void act() {
         ActionResult ar = new ActionResult();
-        ar.setAction("漫画打卡");
+        ar.setAction(this.actionName());
 
         if (!CurrentUser.mangaCheckIn) {
             log.warn("漫画打卡功能未开启！");
             ar.setActionResultCode(0);
             ar.setActionResultMessage("没开漫画打卡...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
-            CurrentUser.actionResult.put("MangaCheckIn", ar);
+            CurrentUser.actionResult.put(this.resultKey(), ar);
             return;
         }
         String requestBody = "platform=ios";
@@ -54,6 +64,6 @@ public class MangaCheckIn implements Action {
             ar.setActionResultMessage(arMsg);
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }
-        CurrentUser.actionResult.put("MangaCheckIn", ar);
+        CurrentUser.actionResult.put(this.resultKey(), ar);
     }
 }

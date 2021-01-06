@@ -43,16 +43,26 @@ public class Coin implements Action {
     private final static int MAX_AUTO_COIN = 5;
 
     @Override
+    public String actionName() {
+        return "自动投币";
+    }
+
+    @Override
+    public String resultKey() {
+        return "Coin";
+    }
+
+    @Override
     public void act() {
         ActionResult ar = new ActionResult();
-        ar.setAction("自动投币");
+        ar.setAction(this.actionName());
 
         if (!CurrentUser.coin) {
             log.warn("自动投币功能未开启！");
             ar.setActionResultCode(0);
             ar.setActionResultMessage("尊重一下UP🐖，币要自己去投");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
-            CurrentUser.actionResult.put("Coin", ar);
+            CurrentUser.actionResult.put(this.resultKey(), ar);
             return;
         }
 
@@ -62,7 +72,7 @@ public class Coin implements Action {
             ar.setActionResultCode(0);
             ar.setActionResultMessage("今天早就投超5个币了，还想投就自己手动投");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
-            CurrentUser.actionResult.put("Coin", ar);
+            CurrentUser.actionResult.put(this.resultKey(), ar);
             return;
         }
         int needCoins = MAX_AUTO_COIN - dailyCoinUsed;
@@ -110,13 +120,10 @@ public class Coin implements Action {
                 Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
                 log.error("自动投币过程异常", e);
-                ar.setActionResultCode(9999);
-                ar.setActionResultMessage("自动投币过程异常");
             }
         }
         ar.setActionResultCode(0);
         ar.setBilibiliCode(0);
-        ar.setActionResultMessage("今天已经自动投掉了5个币了");
-        CurrentUser.actionResult.put("Coin", ar);
+        CurrentUser.actionResult.put(this.resultKey(), ar);
     }
 }

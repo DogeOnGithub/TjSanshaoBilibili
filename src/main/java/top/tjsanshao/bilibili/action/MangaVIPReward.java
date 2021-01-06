@@ -26,16 +26,26 @@ public class MangaVIPReward implements Action {
     private BilibiliRequestClient client;
 
     @Override
+    public String actionName() {
+        return "漫画大会员白嫖福利";
+    }
+
+    @Override
+    public String resultKey() {
+        return "MangaVIPReward";
+    }
+
+    @Override
     public void act() {
         ActionResult ar = new ActionResult();
-        ar.setAction("漫画大会员白嫖福利");
+        ar.setAction(this.actionName());
 
         if (!CurrentUser.mangaVIPReward) {
             log.warn("漫画大会员权益领取功能未开启！");
             ar.setActionResultCode(0);
             ar.setActionResultMessage("没开漫画白嫖...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
-            CurrentUser.actionResult.put("MangaVIPReward", ar);
+            CurrentUser.actionResult.put(this.resultKey(), ar);
             return;
         }
         if (CurrentUser.userInfo.getVipStatus() == BilibiliTypeConstant.VIP_EFFECT) {
@@ -73,6 +83,6 @@ public class MangaVIPReward implements Action {
             ar.setActionResultMessage("不会吧！这年头居然有人不是大会员？！？");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }
-        CurrentUser.actionResult.put("MangaVIPReward", ar);
+        CurrentUser.actionResult.put(this.resultKey(), ar);
     }
 }

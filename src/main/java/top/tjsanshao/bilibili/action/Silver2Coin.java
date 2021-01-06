@@ -28,16 +28,26 @@ public class Silver2Coin implements Action {
     private Init init;
 
     @Override
+    public String actionName() {
+        return "银瓜子换硬币";
+    }
+
+    @Override
+    public String resultKey() {
+        return "Silver2Coin";
+    }
+
+    @Override
     public void act() {
         ActionResult ar = new ActionResult();
-        ar.setAction("银瓜子换硬币");
+        ar.setAction(this.actionName());
 
         if (!CurrentUser.silver2Coin) {
             log.warn("银瓜子换硬币功能未开启！");
             ar.setActionResultCode(0);
             ar.setActionResultMessage("没开银瓜子换硬币...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
-            CurrentUser.actionResult.put("Silver2Coin", ar);
+            CurrentUser.actionResult.put(this.resultKey(), ar);
             return;
         }
         JsonObject response = client.get(APIList.SILVER_TO_COIN);
@@ -53,7 +63,7 @@ public class Silver2Coin implements Action {
 
             ar.setActionResultCode(0);
             ar.setBilibiliCode(0);
-            String arMsg = String.format("现在还剩 %d 个银瓜子了...但是换了硬币之后硬币居然有 %f 个了，银瓜子换硬币成功了额...冲冲冲！！！", sliver, CurrentUser.userInfo.getMoney());
+            String arMsg = String.format("现在还剩 %d 个银瓜子了...但是换了硬币之后硬币居然有 %.0f 个了，银瓜子换硬币成功了额...冲冲冲！！！", sliver, CurrentUser.userInfo.getMoney());
             ar.setActionResultMessage(arMsg);
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         } else {
@@ -66,6 +76,6 @@ public class Silver2Coin implements Action {
             ar.setBilibiliMessage(bilibiliMsg);
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }
-        CurrentUser.actionResult.put("Silver2Coin", ar);
+        CurrentUser.actionResult.put(this.resultKey(), ar);
     }
 }

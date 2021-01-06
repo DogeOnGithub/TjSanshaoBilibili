@@ -36,15 +36,26 @@ public class ChargeMe implements Action {
     private PassCheck passCheck;
 
     @Override
+    public String actionName() {
+        return "自动充电";
+    }
+
+    @Override
+    public String resultKey() {
+        return "ChargeMe";
+    }
+
+    @Override
     public void act() {
         ActionResult ar = new ActionResult();
-        ar.setAction("自动充电");
+        ar.setAction(this.actionName());
 
         if (!CurrentUser.chargeMe) {
             log.warn("自动充电功能未开启！");
             ar.setActionResultCode(0);
             ar.setActionResultMessage("啊？原来是没开自动充电...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
+            CurrentUser.actionResult.put(this.resultKey(), ar);
             return;
         }
 
@@ -131,7 +142,7 @@ public class ChargeMe implements Action {
             ar.setActionResultMessage("shit...今天不是28号，不充电...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }
-        CurrentUser.actionResult.put("ChargeMe", ar);
+        CurrentUser.actionResult.put(this.resultKey(), ar);
     }
 
     /**

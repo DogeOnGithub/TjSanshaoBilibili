@@ -6,6 +6,18 @@ package top.tjsanshao.bilibili.action;
  */
 public interface Action {
     /**
+     * 获取Action中文名称
+     * @return 名称
+     */
+    String actionName();
+
+    /**
+     * 获取结果集key
+     * @return key
+     */
+    String resultKey();
+
+    /**
      * 用户动作
      */
     void act();

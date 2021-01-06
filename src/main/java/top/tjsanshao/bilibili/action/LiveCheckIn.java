@@ -25,16 +25,26 @@ public class LiveCheckIn implements Action {
     private BilibiliRequestClient client;
 
     @Override
+    public String actionName() {
+        return "直播打卡";
+    }
+
+    @Override
+    public String resultKey() {
+        return "LiveCheckIn";
+    }
+
+    @Override
     public void act() {
         ActionResult ar = new ActionResult();
-        ar.setAction("直播打卡");
+        ar.setAction(this.actionName());
 
         if (!CurrentUser.liveCheckIn) {
             log.warn("直播打卡功能未开启！");
             ar.setActionResultCode(0);
             ar.setActionResultMessage("没开直播打卡...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
-            CurrentUser.actionResult.put("LiveCheckIn", ar);
+            CurrentUser.actionResult.put(this.resultKey(), ar);
             return;
         }
         JsonObject response = client.get(APIList.LIVE_CHECK_IN);
@@ -57,6 +67,6 @@ public class LiveCheckIn implements Action {
             ar.setActionResultMessage(arMsg);
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }
-        CurrentUser.actionResult.put("LiveCheckIn", ar);
+        CurrentUser.actionResult.put(this.resultKey(), ar);
     }
 }

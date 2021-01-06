@@ -35,16 +35,26 @@ public class VideoShare implements Action {
     private PassCheck passCheck;
 
     @Override
+    public String actionName() {
+        return "视频分享";
+    }
+
+    @Override
+    public String resultKey() {
+        return "VideoShare";
+    }
+
+    @Override
     public void act() {
         ActionResult ar = new ActionResult();
-        ar.setAction("视频分享");
+        ar.setAction(this.actionName());
 
         if (!CurrentUser.videoShare) {
             log.warn("自动视频分享功能未开启！");
             ar.setActionResultCode(0);
             ar.setActionResultMessage("视频自己滚去手动分享...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
-            CurrentUser.actionResult.put("VideoShare", ar);
+            CurrentUser.actionResult.put(this.resultKey(), ar);
             return;
         }
         String randomVideo = videoPullRequest.randomVideo();
@@ -76,6 +86,6 @@ public class VideoShare implements Action {
             ar.setActionResultMessage("早已分享，无需多言");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }
-        CurrentUser.actionResult.put("VideoShare", ar);
+        CurrentUser.actionResult.put(this.resultKey(), ar);
     }
 }

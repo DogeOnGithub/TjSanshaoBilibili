@@ -8,6 +8,7 @@ import top.tjsanshao.bilibili.action.LiveCheckIn;
 import top.tjsanshao.bilibili.action.MangaCheckIn;
 import top.tjsanshao.bilibili.action.MangaVIPReward;
 import top.tjsanshao.bilibili.action.Silver2Coin;
+import top.tjsanshao.bilibili.auto.AutoTask;
 import top.tjsanshao.bilibili.request.TaskStatus;
 import top.tjsanshao.bilibili.request.UserCheck;
 import top.tjsanshao.bilibili.action.VideoShare;
@@ -52,6 +53,12 @@ public class BilibiliController {
     private Coin coin;
     @Resource
     private ChargeMe chargeMe;
+
+    @RequestMapping("/run")
+    public String run() {
+        AutoTask.run();
+        return "success";
+    }
 
     @RequestMapping("/login")
     public String login() {
