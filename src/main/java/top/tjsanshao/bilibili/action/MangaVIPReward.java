@@ -6,8 +6,10 @@ import org.springframework.stereotype.Component;
 import top.tjsanshao.bilibili.api.APIList;
 import top.tjsanshao.bilibili.constant.BilibiliResponseConstant;
 import top.tjsanshao.bilibili.constant.BilibiliTypeConstant;
+import top.tjsanshao.bilibili.current.ActionResult;
 import top.tjsanshao.bilibili.current.CurrentUser;
 import top.tjsanshao.bilibili.http.BilibiliRequestClient;
+import top.tjsanshao.bilibili.util.TjSanshaoDateUtil;
 
 import javax.annotation.Resource;
 
@@ -25,8 +27,16 @@ public class MangaVIPReward implements Action {
 
     @Override
     public void act() {
+        ActionResult ar = new ActionResult();
+        ar.setAction("漫画大会员白嫖福利");
+
         if (!CurrentUser.mangaVIPReward) {
             log.warn("漫画大会员权益领取功能未开启！");
+            ar.setActionResultCode(0);
+            ar.setActionResultMessage("没开漫画白嫖...");
+            ar.setActionFinishedTime(TjSanshaoDateUtil.now());
+            CurrentUser.actionResult.put("MangaVIPReward", ar);
+            return;
         }
         if (CurrentUser.userInfo.getVipStatus() == BilibiliTypeConstant.VIP_EFFECT) {
             /*
@@ -38,15 +48,31 @@ public class MangaVIPReward implements Action {
             // 参数为json格式
             String requestBody = "{\"reason_id\":" + reasonId + "}";
             JsonObject response = client.post(APIList.VIP_REWARD_COMIC, requestBody);
-            if (response.get(BilibiliResponseConstant.CODE).getAsInt() == BilibiliResponseConstant.CODE_SUCCESS) {
+            int code = response.get(BilibiliResponseConstant.CODE).getAsInt();
+            if (code == BilibiliResponseConstant.CODE_SUCCESS) {
                 JsonObject data = response.getAsJsonObject(BilibiliResponseConstant.DATA);
                 int amount = data.get(BilibiliResponseConstant.AMOUNT).getAsInt();
                 log.info("大会员漫画特权领到啦！这次嫖到了 {} 张漫读券！", amount);
+                ar.setActionResultCode(0);
+                ar.setBilibiliCode(0);
+                String arMsg = String.format("大会员漫画特权领到啦！这次嫖到了 %d 张漫读券！", amount);
+                ar.setActionResultMessage(arMsg);
+                ar.setActionFinishedTime(TjSanshaoDateUtil.now());
             } else {
-                log.warn("大会员不中用了，没东西领，因为{}", response.get(BilibiliResponseConstant.MSG).getAsString());
+                String bilibiliMsg = response.get(BilibiliResponseConstant.MSG).getAsString();
+                log.warn("大会员不中用了，没东西领，因为{}", bilibiliMsg);
+                ar.setActionResultCode(code);
+                ar.setBilibiliCode(code);
+                String arMsg = String.format("大会员不中用了，没东西领，因为%s", bilibiliMsg);
+                ar.setActionResultMessage(arMsg);
+                ar.setBilibiliMessage(bilibiliMsg);
             }
         } else {
             log.error("不会吧！这年头居然有人不是大会员？！？");
+            ar.setActionResultCode(999);
+            ar.setActionResultMessage("不会吧！这年头居然有人不是大会员？！？");
+            ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }
+        CurrentUser.actionResult.put("MangaVIPReward", ar);
     }
 }
