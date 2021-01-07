@@ -2,8 +2,8 @@ package top.tjsanshao.bilibili.current;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import top.tjsanshao.bilibili.request.TaskStatus;
-import top.tjsanshao.bilibili.request.UserCheck;
+import top.tjsanshao.bilibili.bilibilirequest.TaskStatus;
+import top.tjsanshao.bilibili.bilibilirequest.UserCheck;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;

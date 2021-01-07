@@ -9,13 +9,13 @@ import top.tjsanshao.bilibili.action.MangaCheckIn;
 import top.tjsanshao.bilibili.action.MangaVIPReward;
 import top.tjsanshao.bilibili.action.Silver2Coin;
 import top.tjsanshao.bilibili.auto.AutoTask;
-import top.tjsanshao.bilibili.request.TaskStatus;
-import top.tjsanshao.bilibili.request.UserCheck;
+import top.tjsanshao.bilibili.bilibilirequest.TaskStatus;
+import top.tjsanshao.bilibili.bilibilirequest.UserCheck;
 import top.tjsanshao.bilibili.action.VideoShare;
 import top.tjsanshao.bilibili.action.VideoWatch;
 import top.tjsanshao.bilibili.api.OftenAPI;
 import top.tjsanshao.bilibili.current.CurrentUser;
-import top.tjsanshao.bilibili.request.CoinRequest;
+import top.tjsanshao.bilibili.bilibilirequest.CoinRequest;
 
 import javax.annotation.Resource;
 import java.util.HashMap;

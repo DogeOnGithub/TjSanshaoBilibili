@@ -10,8 +10,8 @@ import top.tjsanshao.bilibili.current.ActionResult;
 import top.tjsanshao.bilibili.current.CurrentUser;
 import top.tjsanshao.bilibili.http.BilibiliRequestClient;
 import top.tjsanshao.bilibili.login.PassCheck;
-import top.tjsanshao.bilibili.request.CoinRequest;
-import top.tjsanshao.bilibili.request.VideoPullRequest;
+import top.tjsanshao.bilibili.bilibilirequest.CoinRequest;
+import top.tjsanshao.bilibili.bilibilirequest.VideoPullRequest;
 import top.tjsanshao.bilibili.util.TjSanshaoDateUtil;
 
 import javax.annotation.Resource;

@@ -1,4 +1,4 @@
-package top.tjsanshao.bilibili.request;
+package top.tjsanshao.bilibili.bilibilirequest;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

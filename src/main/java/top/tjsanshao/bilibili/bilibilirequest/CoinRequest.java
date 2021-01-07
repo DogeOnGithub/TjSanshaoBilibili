@@ -1,4 +1,4 @@
-package top.tjsanshao.bilibili.request;
+package top.tjsanshao.bilibili.bilibilirequest;
 
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
