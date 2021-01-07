@@ -44,5 +44,9 @@ public class AutoTask implements ApplicationContextAware {
                 }
             }
         }
+        Notice notice = AutoTask.applicationContext.getBean("notice", Notice.class);
+        if (Objects.nonNull(notice)) {
+            notice.send();
+        }
     }
 }

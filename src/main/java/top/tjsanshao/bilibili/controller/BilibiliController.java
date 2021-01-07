@@ -1,5 +1,6 @@
 package top.tjsanshao.bilibili.controller;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.tjsanshao.bilibili.action.ChargeMe;
@@ -9,6 +10,7 @@ import top.tjsanshao.bilibili.action.MangaCheckIn;
 import top.tjsanshao.bilibili.action.MangaVIPReward;
 import top.tjsanshao.bilibili.action.Silver2Coin;
 import top.tjsanshao.bilibili.auto.AutoTask;
+import top.tjsanshao.bilibili.auto.Notice;
 import top.tjsanshao.bilibili.bilibilirequest.TaskStatus;
 import top.tjsanshao.bilibili.bilibilirequest.UserCheck;
 import top.tjsanshao.bilibili.action.VideoShare;
@@ -53,6 +55,8 @@ public class BilibiliController {
     private Coin coin;
     @Resource
     private ChargeMe chargeMe;
+    @Resource
+    private Notice notice;
 
     @RequestMapping("/run")
     public String run() {
@@ -149,5 +153,17 @@ public class BilibiliController {
     public String dailyCoinExp() {
         int exp = coinRequest.dailyCoinExp();
         return String.valueOf(exp);
+    }
+
+    @RequestMapping("/send")
+    public String send() {
+        notice.send();
+        return "success";
+    }
+
+    @RequestMapping("/s/{t}/{c}")
+    public String send(@PathVariable String t, @PathVariable String c) {
+        notice.send(t, c);
+        return "success";
     }
 }

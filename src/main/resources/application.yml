@@ -12,6 +12,9 @@ http:
       connectionRequestTimeout: 5000
       socketTimeout: 10000
 
+wechat:
+  pushSecret: SCU146848T9c7682b736346a574c484ea38484307a5ff670381339e
+
 bilibili:
   pass:
     userId: 18811177
