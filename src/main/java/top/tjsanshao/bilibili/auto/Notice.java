@@ -43,7 +43,15 @@ public class Notice {
 
     public void send() {
         String title = String.format("%s Bilibili Auto Task Result", DateUtil.today());
-        String content = new Gson().toJson(CurrentUser.actionResult);
-        this.send(title, content);
+        StringBuilder sb = new StringBuilder();
+        sb.append("当前剩余硬币：").append(CurrentUser.userInfo.getMoney()).append(System.lineSeparator());
+        sb.append("当前等级：").append(CurrentUser.userInfo.getLevel_info().getCurrent_level()).append(System.lineSeparator());
+        sb.append("当前经验：").append(CurrentUser.userInfo.getLevel_info().getCurrent_exp()).append(System.lineSeparator());
+        sb.append("距离6级大佬还差经验：").append(CurrentUser.userInfo.getLevel_info().getNext_exp_asInt() - CurrentUser.userInfo.getLevel_info().getCurrent_exp()).append(System.lineSeparator());
+        CurrentUser.actionResult.forEach((n, a) -> {
+            sb.append(n).append("--").append(a.getAction()).append("--").append(a.getActionResultCode()).append("--").append(a.getActionResultMessage()).append("--").append(a.getActionFinishedTime());
+            sb.append(System.lineSeparator());
+        });
+        this.send(title, sb.toString());
     }
 }
