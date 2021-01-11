@@ -15,6 +15,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import top.tjsanshao.bilibili.configuration.HttpConfiguration;
 import top.tjsanshao.bilibili.login.PassCheck;
@@ -90,6 +91,7 @@ public class BilibiliRequestClient {
             }
         } catch (Exception e) {
             log.error("request bilibili error!", e);
+            log.error("error response:{}", response);
         } finally {
             responseClose(response, client);
         }
@@ -98,13 +100,13 @@ public class BilibiliRequestClient {
 
     private static JsonObject parseResponse(CloseableHttpResponse response) throws IOException {
         int statusCode = response.getStatusLine().getStatusCode();
-        if (statusCode == 200) {
+        if (statusCode == HttpStatus.OK.value()) {
             HttpEntity entity = response.getEntity();
             String resString = EntityUtils.toString(entity);
             return JsonParser.parseString(resString).getAsJsonObject();
         } else {
             log.error("request bilibili error! statuCode=[{}]", statusCode);
-            return null;
+            return JsonParser.parseString("'status':'error'").getAsJsonObject();
         }
     }
 
