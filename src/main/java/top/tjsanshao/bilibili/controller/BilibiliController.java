@@ -11,6 +11,7 @@ import top.tjsanshao.bilibili.action.MangaVIPReward;
 import top.tjsanshao.bilibili.action.Silver2Coin;
 import top.tjsanshao.bilibili.auto.AutoTask;
 import top.tjsanshao.bilibili.auto.Notice;
+import top.tjsanshao.bilibili.bilibilirequest.LoginRequest;
 import top.tjsanshao.bilibili.bilibilirequest.TaskStatus;
 import top.tjsanshao.bilibili.bilibilirequest.UserCheck;
 import top.tjsanshao.bilibili.action.VideoShare;
@@ -35,6 +36,8 @@ public class BilibiliController {
     private OftenAPI often;
     @Resource
     private CoinRequest coinRequest;
+    @Resource
+    private LoginRequest loginRequest;
     @Resource
     private UserCheck userCheck;
     @Resource
@@ -165,5 +168,15 @@ public class BilibiliController {
     public String send(@PathVariable String t, @PathVariable String c) {
         notice.send(t, c);
         return "success";
+    }
+
+    @RequestMapping("/loginCode")
+    public String loginCode() {
+        return loginRequest.loginCode();
+    }
+
+    @RequestMapping("/loginInfo")
+    public String loginInfo(String oauthKey) {
+        return loginRequest.loginInfo(oauthKey);
     }
 }

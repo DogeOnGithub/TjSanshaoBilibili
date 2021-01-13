@@ -34,4 +34,9 @@ public class PassCheck {
     public String getPass() {
         return "bili_jct=" + biliJct + ";SESSDATA=" + sessData + ";DedeUserID=" + userId + ";";
     }
+
+    public void updatePass(String sessData, String biliJct) {
+        this.sessData = sessData;
+        this.biliJct = biliJct;
+    }
 }
