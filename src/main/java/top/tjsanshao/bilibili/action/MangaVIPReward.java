@@ -42,7 +42,7 @@ public class MangaVIPReward implements Action {
 
         if (!CurrentUser.mangaVIPReward) {
             log.warn("漫画大会员权益领取功能未开启！");
-            ar.setActionResultCode(0);
+            ar.setActionResultCode(-9999);
             ar.setActionResultMessage("没开漫画白嫖...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
             CurrentUser.actionResult.put(this.resultKey(), ar);
@@ -79,7 +79,7 @@ public class MangaVIPReward implements Action {
             }
         } else {
             log.error("不会吧！这年头居然有人不是大会员？！？");
-            ar.setActionResultCode(999);
+            ar.setActionResultCode(-9999);
             ar.setActionResultMessage("不会吧！这年头居然有人不是大会员？！？");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }

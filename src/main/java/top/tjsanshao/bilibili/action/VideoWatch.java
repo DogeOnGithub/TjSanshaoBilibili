@@ -49,7 +49,7 @@ public class VideoWatch implements Action {
 
         if (!CurrentUser.videoWatch) {
             log.warn("自动观看功能未开启！");
-            ar.setActionResultCode(0);
+            ar.setActionResultCode(-9999);
             ar.setActionResultMessage("不会吧？不会真的有人不是每天上B站的吧？！？");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
             CurrentUser.actionResult.put(this.resultKey(), ar);
@@ -81,7 +81,7 @@ public class VideoWatch implements Action {
             }
         } else {
             log.info("已完成每日播放视频任务！");
-            ar.setActionResultCode(0);
+            ar.setActionResultCode(-9999);
             ar.setActionResultMessage("不会吧？？？还等自动任务？？昨晚刷完视频才睡的");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }

@@ -44,7 +44,7 @@ public class Silver2Coin implements Action {
 
         if (!CurrentUser.silver2Coin) {
             log.warn("银瓜子换硬币功能未开启！");
-            ar.setActionResultCode(0);
+            ar.setActionResultCode(-9999);
             ar.setActionResultMessage("没开银瓜子换硬币...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
             CurrentUser.actionResult.put(this.resultKey(), ar);

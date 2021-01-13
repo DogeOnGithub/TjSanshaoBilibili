@@ -59,7 +59,7 @@ public class Coin implements Action {
 
         if (!CurrentUser.coin) {
             log.warn("自动投币功能未开启！");
-            ar.setActionResultCode(0);
+            ar.setActionResultCode(-9999);
             ar.setActionResultMessage("尊重一下UP🐖，币要自己去投");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
             CurrentUser.actionResult.put(this.resultKey(), ar);

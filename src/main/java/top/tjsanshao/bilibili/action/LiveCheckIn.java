@@ -41,7 +41,7 @@ public class LiveCheckIn implements Action {
 
         if (!CurrentUser.liveCheckIn) {
             log.warn("直播打卡功能未开启！");
-            ar.setActionResultCode(0);
+            ar.setActionResultCode(-9999);
             ar.setActionResultMessage("没开直播打卡...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
             CurrentUser.actionResult.put(this.resultKey(), ar);

@@ -41,7 +41,7 @@ public class MangaCheckIn implements Action {
 
         if (!CurrentUser.mangaCheckIn) {
             log.warn("漫画打卡功能未开启！");
-            ar.setActionResultCode(0);
+            ar.setActionResultCode(-9999);
             ar.setActionResultMessage("没开漫画打卡...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
             CurrentUser.actionResult.put(this.resultKey(), ar);

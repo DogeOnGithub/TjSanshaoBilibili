@@ -52,7 +52,7 @@ public class ChargeMe implements Action {
 
         if (!CurrentUser.chargeMe) {
             log.warn("自动充电功能未开启！");
-            ar.setActionResultCode(0);
+            ar.setActionResultCode(-9999);
             ar.setActionResultMessage("啊？原来是没开自动充电...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
             CurrentUser.actionResult.put(this.resultKey(), ar);
@@ -74,9 +74,10 @@ public class ChargeMe implements Action {
         if (vipType == BilibiliTypeConstant.NORMAL_VIP || vipType == BilibiliTypeConstant.MONTH_VIP) {
             // 普通会员和月度会员不赠送B币券，无法充电
             log.warn("不是年度大会员！");
-            ar.setActionResultCode(0);
+            ar.setActionResultCode(-9999);
             ar.setActionResultMessage("啊？我竟然不是年度大会员？！？！");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
+            CurrentUser.actionResult.put(this.resultKey(), ar);
             return;
         }
 
@@ -138,7 +139,7 @@ public class ChargeMe implements Action {
             }
         } else {
             log.warn("shit...今天不是28号，不充电...");
-            ar.setActionResultCode(0);
+            ar.setActionResultCode(-9999);
             ar.setActionResultMessage("shit...今天不是28号，不充电...");
             ar.setActionFinishedTime(TjSanshaoDateUtil.now());
         }
